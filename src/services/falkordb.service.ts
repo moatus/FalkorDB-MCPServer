@@ -40,7 +40,8 @@ class FalkorDBService {
       const result = await graph.query(query, params);
       return result;
     } catch (error) {
-      console.error(`Error executing FalkorDB query on graph ${graphName}:`, error);
+      const sanitizedGraphName = graphName.replace(/\n|\r/g, "");
+      console.error('Error executing FalkorDB query on graph %s:', sanitizedGraphName, error);
       throw error;
     }
   }
