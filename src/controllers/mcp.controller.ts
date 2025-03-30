@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { falkorDBService } from '../services/falkordb.service';
-import { config } from '../config';
+
 import { 
   MCPContextRequest, 
   MCPResponse, 
