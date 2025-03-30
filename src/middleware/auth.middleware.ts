@@ -4,7 +4,7 @@ import { config } from '../config';
 /**
  * Middleware to authenticate MCP API requests
  */
-export const authenticateMCP = (req: Request, res: Response, next: NextFunction) => {
+export const authenticateMCP = (req: Request, res: Response, next: NextFunction): Response<any, Record<string, any>> | void => {
   const apiKey = req.headers['x-api-key'] || req.query.apiKey;
   
   // Skip authentication for development environment

@@ -11,7 +11,7 @@ export class MCPController {
   /**
    * Process MCP context requests
    */
-  async processContextRequest(req: Request, res: Response) {
+  async processContextRequest(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
     try {
       const contextRequest: MCPContextRequest = req.body;
       
@@ -61,7 +61,7 @@ export class MCPController {
   /**
    * Process MCP metadata requests
    */
-  async processMetadataRequest(req: Request, res: Response) {
+  async processMetadataRequest(req: Request, res: Response): Promise<Response<any, Record<string, any>>>  {
     try {
       // Return metadata about available graphs or capabilities
       const metadata: MCPProviderMetadata = {
@@ -87,7 +87,7 @@ export class MCPController {
   /**
    * List available graphs in FalkorDB
    */
-  async listGraphs(req: Request, res: Response) {
+  async listGraphs(req: Request, res: Response): Promise<Response<any, Record<string, any>>>  {
     try {
       const graphNames = await falkorDBService.listGraphs();
       
