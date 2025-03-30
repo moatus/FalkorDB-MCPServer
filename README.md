@@ -70,6 +70,43 @@ npm start
 * `POST /api/mcp/context`: Execute queries against FalkorDB
 * `GET /api/mcp/health`: Check server health
 
+## MCP Configuration
+
+To use this server with MCP clients, you can add it to your MCP configuration:
+
+```json
+{
+  "mcpServers": {
+    "falkordb": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-p", "3000:3000",
+        "--env-file", ".env",
+        "falkordb-mcp-server",
+        "falkordb://host.docker.internal:6379"
+      ]
+    }
+  }
+}
+```
+
+For client-side configuration:
+
+```json
+{
+  "defaultServer": "falkordb",
+  "servers": {
+    "falkordb": {
+      "url": "http://localhost:3000/api/mcp",
+      "apiKey": "your_api_key_here"
+    }
+  }
+}
+```
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
