@@ -47,7 +47,7 @@ export interface MCPServerConfig {
           "--rm",
           "-p", "3000:3000",
           "--env-file", ".env",
-          "falkordb-mcp-server",
+          "falkordb-mcpserver",
           "falkordb://host.docker.internal:6379"
         ]
       }

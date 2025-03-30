@@ -10,8 +10,8 @@
     "lint": "eslint . --ext .ts",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "docker:build": "docker build -t falkordb-mcp-server .",
-    "docker:run": "docker run -p 3000:3000 falkordb-mcp-server"
+    "docker:build": "docker build -t falkordb-mcpserver .",
+    "docker:run": "docker run -p 3000:3000 falkordb-mcpserver"
   },
   "keywords": [
     "mcp",

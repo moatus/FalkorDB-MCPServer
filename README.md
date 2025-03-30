@@ -17,8 +17,8 @@ This project implements a server that follows the Model Context Protocol (MCP) s
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/yourusername/falkordb-mcp-server.git
-   cd falkordb-mcp-server
+   git clone https://github.com/falkordb/falkordb-mcpserver.git
+   cd falkordb-mcpserver
    ```
 2. Install dependencies:
 
@@ -85,7 +85,7 @@ To use this server with MCP clients, you can add it to your MCP configuration:
         "--rm",
         "-p", "3000:3000",
         "--env-file", ".env",
-        "falkordb-mcp-server",
+        "falkordb-mcpserver",
         "falkordb://host.docker.internal:6379"
       ]
     }
