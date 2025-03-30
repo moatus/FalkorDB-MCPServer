@@ -1,0 +1,35 @@
+{
+  "name": "falkordb-mcp-server",
+  "version": "1.0.0",
+  "description": "Model Context Protocol server for FalkorDB",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "lint": "eslint . --ext .ts",
+    "test": "jest"
+  },
+  "keywords": [
+    "mcp",
+    "modelcontextprotocol",
+    "falkordb",
+    "graph",
+    "database"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.0",
+    "nodemon": "^3.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.8.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "falkordb": "^6.2.07"
+  }
+}

@@ -1,2 +1,79 @@
-# FalkorDB-MCP-Server
-FalkorDB MCP Server
+# FalkorDB MCP Server
+
+A Model Context Protocol (MCP) server for FalkorDB, allowing AI models to query and interact with graph databases.
+
+## Overview
+
+This project implements a server that follows the Model Context Protocol (MCP) specification to connect AI models with FalkorDB graph databases. The server translates and routes MCP requests to FalkorDB and formats the responses according to the MCP standard.
+
+## Prerequisites
+
+* Node.js (v16 or later)
+* npm or yarn
+* FalkorDB instance (can be run locally or remotely)
+
+## Installation
+
+1. Clone this repository:
+
+   ```bash
+   git clone https://github.com/yourusername/falkordb-mcp-server.git
+   cd falkordb-mcp-server
+   ```
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+3. Copy the example environment file and configure it:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Edit `.env` with your configuration details.
+
+## Configuration
+
+Configuration is managed through environment variables in the `.env` file:
+
+* `PORT`: Server port (default: 3000)
+* `NODE_ENV`: Environment (development, production)
+* `FALKORDB_HOST`: FalkorDB host (default: localhost)
+* `FALKORDB_PORT`: FalkorDB port (default: 6379)
+* `FALKORDB_USERNAME`: Username for FalkorDB authentication (if required)
+* `FALKORDB_PASSWORD`: Password for FalkorDB authentication (if required)
+* `MCP_API_KEY`: API key for authenticating MCP requests
+
+## Usage
+
+### Development
+
+Start the development server with hot-reloading:
+
+```bash
+npm run dev
+```
+
+### Production
+
+Build and start the server:
+
+```bash
+npm run build
+npm start
+```
+
+## API Endpoints
+
+* `GET /api/mcp/metadata`: Get metadata about the FalkorDB instance and available capabilities
+* `POST /api/mcp/context`: Execute queries against FalkorDB
+* `GET /api/mcp/health`: Check server health
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the ISC License - see the LICENSE file for details.
