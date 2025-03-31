@@ -69,6 +69,8 @@ npm start
 * `GET /api/mcp/metadata`: Get metadata about the FalkorDB instance and available capabilities
 * `POST /api/mcp/context`: Execute queries against FalkorDB
 * `GET /api/mcp/health`: Check server health
+* `GET /api/mcp/graphs`: Returns the list of Graphs
+* 
 
 ## MCP Configuration
 
