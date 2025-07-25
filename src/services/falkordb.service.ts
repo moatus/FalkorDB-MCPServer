@@ -1,5 +1,6 @@
 import { FalkorDB } from 'falkordb';
-import { config } from '../config';
+import { config } from '../config/index.js';
+import { GraphReply } from 'falkordb/dist/src/graph.js';
 
 class FalkorDBService {
   private client: FalkorDB | null = null;
@@ -22,28 +23,22 @@ class FalkorDBService {
       // Test connection
       const connection = await this.client.connection;
       await connection.ping();
-      console.log('Successfully connected to FalkorDB');
+      // console.log('Successfully connected to FalkorDB');
     } catch (error) {
-      console.error('Failed to connect to FalkorDB:', error);
+      // console.error('Failed to connect to FalkorDB:', error);
       // Retry connection after a delay
       setTimeout(() => this.init(), 5000);
     }
   }
 
-  async executeQuery(graphName: string, query: string, params?: Record<string, any>): Promise<any> {
+  async executeQuery(graphName: string, query: string, params?: Record<string, any>): Promise<GraphReply<any>> {
     if (!this.client) {
       throw new Error('FalkorDB client not initialized');
     }
-    
-    try {
-      const graph = this.client.selectGraph(graphName);
-      const result = await graph.query(query, params);
-      return result;
-    } catch (error) {
-      const sanitizedGraphName = graphName.replace(/\n|\r/g, "");
-      console.error('Error executing FalkorDB query on graph %s:', sanitizedGraphName, error);
-      throw error;
-    }
+
+    const graph = this.client.selectGraph(graphName);
+    const result = await graph.query(query, params);
+    return result;
   }
 
   /**
@@ -55,13 +50,15 @@ class FalkorDBService {
       throw new Error('FalkorDB client not initialized');
     }
 
-    try {
-      // Using the simplified list method which always returns an array
-      return await this.client.list();
-    } catch (error) {
-      console.error('Error listing FalkorDB graphs:', error);
-      throw error;
+    return await this.client.list();
+  }
+
+  async deleteGraph(graphName: string) {
+    if (!this.client) {
+      throw new Error('FalkorDB client not initialized');
     }
+
+    await this.client.selectGraph(graphName).delete();
   }
 
   async close() {
