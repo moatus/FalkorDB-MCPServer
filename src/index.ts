@@ -20,23 +20,11 @@ server.registerResource(
   },
   async (uri) => {
     const graphNames = await falkorDBService.listGraphs();
-    const allResults = [];
-    for (const graphName of graphNames) {
-      const result = await falkorDBService.executeQuery(graphName, "MATCH (n)-[r]->(m) RETURN n, r, m");
-      allResults.push({
-        graphName,
-        result: result,
-      });
-    }
-
-    const resultString = allResults.map((result) => {
-      return `Graph: ${result.graphName}\nAll Nodes:\n${JSON.stringify(result.result, null, 2)}`;
-    }).join("\n");
-
+    const markdownList = graphNames.map(name => `- ${name}`).join('\n');
     return {
       contents: [{
         uri: uri.href,
-        text: resultString,
+        text: markdownList,
       }]
     }
   }
@@ -67,7 +55,7 @@ server.registerTool(
   "list_graphs",
   {
     title: "List Graphs",
-    description: "List all graphs in the database",
+    description: "List all graphs available to query",
     inputSchema: {},
   },
   async () => {
