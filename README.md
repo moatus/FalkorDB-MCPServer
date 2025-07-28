@@ -24,6 +24,30 @@ This server implements the [Model Context Protocol (MCP)](https://modelcontextpr
 - FalkorDB instance (running locally or remotely)
 - Claude Desktop app (for AI integration)
 
+### Running from npm
+
+Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+
+```json
+{
+  "mcpServers": {
+    "falkordb": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "falkordb-mcpserver@latest"
+      ],
+      "env": {
+        "FALKORDB_HOST": "localhost",
+        "FALKORDB_PORT": "6379",
+        "FALKORDB_USERNAME": "",
+        "FALKORDB_PASSWORD": ""
+      }
+    }
+  }
+}
+```
+
 ### Installation
 
 1. **Clone and install:**

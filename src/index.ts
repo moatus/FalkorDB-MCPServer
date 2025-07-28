@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { falkorDBService } from './services/falkordb.service.js';
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
