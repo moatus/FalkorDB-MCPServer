@@ -1,43 +1,102 @@
 {
   "name": "falkordb-mcpserver",
   "version": "1.0.0",
-  "description": "Model Context Protocol server for FalkorDB",
+  "description": "Model Context Protocol server for FalkorDB graph databases - enables AI assistants to query and manage graph data using natural language",
   "main": "dist/index.js",
   "type": "module",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SecKatie/falkordb-mcpserver.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SecKatie/falkordb-mcpserver/issues"
+  },
+  "homepage": "https://github.com/SecKatie/falkordb-mcpserver#readme",
+  "author": {
+    "name": "Katie Mulliken",
+    "email": "katie@mulliken.net",
+    "url": "https://github.com/SecKatie"
+  },
+  "license": "MIT",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "falkordb",
+    "graph-database",
+    "ai",
+    "claude",
+    "opencypher",
+    "redis",
+    "graph",
+    "database",
+    "typescript",
+    "server",
+    "chatbot",
+    "llm",
+    "anthropic"
+  ],
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE",
+    ".env.example"
+  ],
+  "bin": {
+    "falkordb-mcp": "./dist/index.js"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'npm run build && npm start'",
+    "dev:ts": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
     "test": "jest",
+    "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "docker:build": "docker build -t falkordb-mcpserver .",
-    "docker:run": "docker run -p 3000:3000 falkordb-mcpserver"
+    "test:ci": "jest --coverage --ci --watchAll=false",
+    "inspect": "npm run build && npx -y @modelcontextprotocol/inspector node $PWD/dist/index.js",
+    "clean": "rm -rf dist coverage",
+    "prepublish": "npm run test:ci && npm run lint && npm run build"
   },
-  "keywords": [
-    "mcp",
-    "modelcontextprotocol",
-    "falkordb",
-    "graph",
-    "database"
-  ],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "@types/node": "24.1.0",
-    "@typescript-eslint/eslint-plugin": "8.38.0",
-    "@typescript-eslint/parser": "8.38.0",
-    "eslint": "9.31.0",
-    "jest": "30.0.5",
-    "@types/jest": "30.0.0",
-    "ts-jest": "29.4.0",
-    "nodemon": "3.1.10",
-    "ts-node": "10.9.2",
-    "typescript": "5.8.3"
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20.14.0",
+    "@typescript-eslint/eslint-plugin": "^8.38.0",
+    "@typescript-eslint/parser": "^8.38.0",
+    "eslint": "^9.31.0",
+    "jest": "^30.0.5",
+    "nodemon": "^3.1.10",
+    "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "1.17.0",
-    "dotenv": "17.2.1",
-    "falkordb": "6.3.0"
+    "@modelcontextprotocol/sdk": "^1.17.0",
+    "dotenv": "^17.2.1",
+    "falkordb": "^6.3.0",
+    "platformdirs": "^4.3.8-rc3",
+    "redis": "^4.0.0",
+    "zod": "^3.23.0"
+  },
+  "peerDependencies": {
+    "redis": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "redis": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/SecKatie"
   }
 }
