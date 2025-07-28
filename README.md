@@ -28,7 +28,7 @@ This server implements the [Model Context Protocol (MCP)](https://modelcontextpr
 
 1. **Clone and install:**
    ```bash
-   git clone https://github.com/falkordb/falkordb-mcpserver.git
+   git clone https://github.com/SecKatie/falkordb-mcpserver.git
    cd falkordb-mcpserver
    npm install
    ```
@@ -40,16 +40,22 @@ This server implements the [Model Context Protocol (MCP)](https://modelcontextpr
    
    Edit `.env`:
    ```env
-   # FalkorDB Connection
+   # Environment Configuration
+   NODE_ENV=development
+   
+   # FalkorDB Configuration
    FALKORDB_HOST=localhost
    FALKORDB_PORT=6379
    FALKORDB_USERNAME=    # Optional
    FALKORDB_PASSWORD=    # Optional
    
-   # Redis Connection (for key-value storage)
+   # Redis Configuration (for key-value operations)
    REDIS_URL=redis://localhost:6379
    REDIS_USERNAME=       # Optional
    REDIS_PASSWORD=       # Optional
+   
+   # Logging Configuration (optional)
+   ENABLE_FILE_LOGGING=false
    ```
 
 3. **Build the project:**
@@ -109,31 +115,63 @@ Once connected, you can ask Claude to:
 # Development with hot-reload
 npm run dev
 
+# Development with TypeScript execution (faster startup)
+npm run dev:ts
+
 # Run tests
 npm test
 
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage report
+npm run test:coverage
+
 # Lint code
 npm run lint
+
+# Lint and auto-fix issues
+npm run lint:fix
 
 # Build for production
 npm run build
 
 # Start production server
 npm start
+
+# Inspect MCP server with debugging tools
+npm run inspect
+
+# Clean build artifacts
+npm run clean
+
+# Full CI pipeline (test, lint, build)
+npm run prepublish
 ```
 
 ### Project Structure
 
 ```
 src/
-├── index.ts              # MCP server entry point
-├── services/            
-│   ├── falkordb.service.ts    # FalkorDB operations
-│   └── redis.service.ts       # Key-value operations
-├── config/              
-│   └── index.ts              # Configuration management
-├── models/              # TypeScript type definitions
-└── utils/               # Utility functions
+├── index.ts                   # MCP server entry point
+├── services/                  # Core business logic
+│   ├── falkordb.service.ts   # FalkorDB operations
+│   ├── redis.service.ts      # Key-value operations
+│   └── logger.service.ts     # Logging and MCP notifications
+├── mcp/                      # MCP protocol implementations
+│   ├── tools.ts             # MCP tool definitions
+│   ├── resources.ts         # MCP resource definitions
+│   └── prompts.ts           # MCP prompt definitions
+├── errors/                   # Error handling framework
+│   ├── AppError.ts          # Custom error classes
+│   └── ErrorHandler.ts      # Global error handling
+├── config/                   # Configuration management
+│   └── index.ts             # Environment configuration
+├── models/                   # TypeScript type definitions
+│   ├── mcp.types.ts         # MCP protocol types
+│   └── mcp-client-config.ts # Configuration models
+└── utils/                    # Utility functions
+    └── connection-parser.ts  # Connection string parsing
 ```
 
 ## 🔧 Advanced Configuration

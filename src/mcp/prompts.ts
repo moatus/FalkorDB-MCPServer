@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 
-export default function registerAllPrompts(server: McpServer): void {
+function registerUserSetupPrompt(server: McpServer): void {
   // Register graph_list resource
   server.registerPrompt(
     "user_setup",
@@ -52,4 +52,84 @@ Please proceed with setting up the user "${name}" in the memory graph.`
       }
     }
   )
+}
+
+function registerMemoryQueryPrompt(server: McpServer): void {
+  server.registerPrompt(
+    "memory_query",
+    {
+      title: "Memory Query",
+      description: "Query the memory graph to retrieve and analyze stored information",
+      argsSchema: {
+        query: z.string().describe("The query or topic to search for in memory"),
+        context: z.string().optional().describe("Additional context to help scope the search"),
+        relationship_depth: z.string().describe("How many relationship hops to traverse (1-3)")
+      }
+    },
+    async ({query, context, relationship_depth}) => {
+      const memoryMessage = `# Memory Query Task
+
+You are working with a FalkorDB graph database to retrieve and analyze stored memory information.
+
+**Query Information:**
+- Search Query: ${query}
+${context ? `- Additional Context: ${context}` : ''}
+- Relationship Depth: ${relationship_depth} hops
+
+**Your task is to:**
+
+1. **Search for relevant nodes**: Use Cypher queries to find nodes that match or relate to "${query}"
+   - Look for nodes with matching names, properties, or content
+   - Consider partial matches and semantic relationships
+   
+2. **Traverse relationships**: Explore connected nodes up to ${relationship_depth} relationship hops to gather context:
+   - Follow relationships like RELATES_TO, MENTIONED_IN, CONNECTED_TO
+   - Include timestamps and relationship properties
+   
+3. **Analyze and synthesize**: Process the retrieved information to:
+   - Identify key patterns and connections
+   - Extract relevant facts and relationships
+   - Organize information chronologically or by relevance
+   
+4. **Provide structured results**: Format your findings including:
+   - Direct matches and their properties
+   - Related nodes and connection paths
+   - Temporal patterns if applicable
+   - Confidence levels for relationships
+
+**Query Guidelines:**
+- Use MATCH patterns to find relevant nodes
+- Utilize WHERE clauses for filtering
+- Consider using OPTIONAL MATCH for related information
+- Include LIMIT clauses to manage result size
+- Order results by relevance or timestamp
+
+**Example Cypher patterns:**
+\`\`\`cypher
+MATCH (n) WHERE n.name CONTAINS "${query}" OR n.content CONTAINS "${query}"
+MATCH (n)-[r*1..${relationship_depth}]-(related)
+RETURN n, r, related ORDER BY n.timestamp DESC
+\`\`\`
+
+Please proceed with querying the memory graph for information about "${query}".`
+
+      return {
+        messages: [
+          {
+            role: "user",
+            content: {
+              type: "text",
+              text: memoryMessage
+            }
+          }
+        ]
+      }
+    }
+  )
+}
+
+
+export default function registerAllPrompts(server: McpServer): void {
+  registerUserSetupPrompt(server);
+  registerMemoryQueryPrompt(server);
 }
