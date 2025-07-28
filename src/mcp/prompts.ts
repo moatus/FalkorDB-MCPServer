@@ -189,8 +189,8 @@ You are working with a FalkorDB graph database to optimize its structure for bet
 **Analysis Queries to Run:**
 \`\`\`cypher
 // Find high-degree nodes
-MATCH (n)-[r]-()
-WITH n, count(r) as degree
+MATCH (n)
+WITH n, size((n)--()) as degree
 WHERE degree > 20
 RETURN n, degree ORDER BY degree DESC LIMIT 10
 
