@@ -48,6 +48,25 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
 }
 ```
 
+**For remote deployments with URL-based API key:**
+
+```json
+{
+  "mcpServers": {
+    "falkordb": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "falkordb-mcpserver@latest"
+      ],
+      "env": {
+        "FALKORDB_URL": "falkordb://your-api-key@your-host.com:6379"
+      }
+    }
+  }
+}
+```
+
 ### Installation
 
 1. **Clone and install:**
@@ -202,7 +221,24 @@ src/
 
 ### Using with Remote FalkorDB
 
-For cloud-hosted FalkorDB instances:
+For cloud-hosted FalkorDB instances, you have two configuration options:
+
+#### Option 1: Connection URL (Recommended for Remote Deployments)
+
+Use a single URL with embedded credentials - ideal for applications that only accept URL parameters:
+
+```env
+# With username and password
+FALKORDB_URL=falkordb://username:password@your-instance.falkordb.com:6379
+
+# With API key (common for cloud services)
+FALKORDB_URL=falkordb://your-api-key@your-instance.falkordb.com:6379
+
+# Without authentication
+FALKORDB_URL=falkordb://your-instance.falkordb.com:6379
+```
+
+#### Option 2: Individual Parameters (Fallback)
 
 ```env
 FALKORDB_HOST=your-instance.falkordb.com
@@ -210,6 +246,8 @@ FALKORDB_PORT=6379
 FALKORDB_USERNAME=your-username
 FALKORDB_PASSWORD=your-secure-password
 ```
+
+**Note:** If both `FALKORDB_URL` and individual parameters are provided, the URL takes precedence.
 
 ### Running Multiple Instances
 

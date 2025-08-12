@@ -25,7 +25,8 @@ class FalkorDBService {
       logger.info('Attempting to connect to FalkorDB', {
         host: config.falkorDB.host,
         port: config.falkorDB.port,
-        attempt: this.retryCount + 1
+        attempt: this.retryCount + 1,
+        usingConnectionUrl: !!config.falkorDB.connectionUrl
       });
 
       this.client = await FalkorDB.connect({

@@ -11,7 +11,10 @@ interface FalkorDBConnectionOptions {
   
   /**
    * Parse a FalkorDB connection string
-   * Format: falkordb://[username:password@]host:port
+   * Supports multiple formats:
+   * - falkordb://[username:password@]host:port
+   * - falkordb://[api-key@]host:port (for API key authentication)
+   * - falkordb://host:port (no authentication)
    * 
    * @param connectionString The connection string to parse
    * @returns Parsed connection options
